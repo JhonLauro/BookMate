@@ -19,5 +19,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('library.urls')), #loads app
+    path('', include('home.urls')),  # Landing page
+    path('auth/', include('sign_up.urls')),  # Registration
+    path('auth/', include('login.urls')),  # Login/Logout
+    path('', include('profile_page.urls')),  # Profile pages
+    path('genre/', include('genre_setup.urls')),  # Genre setup
+    path('purchase/', include('purchase.urls')),  # Purchase functionality
+    path('', include('library.urls')),  # Library/dashboard/books
 ]

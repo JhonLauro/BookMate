@@ -188,7 +188,6 @@ function initFilterHandler() {
   filterHandlerInitialized = true;
 
   const filterButtons = document.querySelectorAll(".filter-btn");
-  const bookCards = document.querySelectorAll("#user-books .book-card");
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -197,6 +196,9 @@ function initFilterHandler() {
       btn.classList.add("active");
 
       const filter = btn.dataset.filter;
+
+      // Query book cards each time (to include dynamically added books)
+      const bookCards = document.querySelectorAll("#user-books .book-card");
 
       // Filter books
       bookCards.forEach((card) => {

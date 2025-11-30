@@ -193,8 +193,8 @@ newCard.innerHTML = `
 </div>
 
 <div class="book-actions">
-  <button class="favorite-btn" data-olid="${payload.olid}">
-    <span class="star-icon">☆</button>
+  <button class="favorite-btn" data-olid="${payload.olid}" title="Add to favorites">
+    <span class="star-icon">☆</span>
   </button>
 
   <!-- ✅ KEEP edit-btn EXACTLY AS YOU SAID -->

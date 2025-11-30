@@ -414,6 +414,22 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   border: 3px solid #5A6268;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #8A9298 0%, #7C858D 100%);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .back-arrow {
@@ -534,6 +550,21 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.book-link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.book-link-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .read-online-btn {
@@ -543,11 +574,19 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+.read-online-btn:hover {
+  background: linear-gradient(180deg, #6BABE5 0%, #5A8FC8 100%);
+}
+
 .buy-btn {
   background: linear-gradient(180deg, #5CB85C 0%, #4A9D4A 100%);
   color: white;
   border-color: #3D8B3D;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.buy-btn:hover {
+  background: linear-gradient(180deg, #6CC86C 0%, #5AAD5A 100%);
 }
 
 /* Right section (Details + Recommendations) */

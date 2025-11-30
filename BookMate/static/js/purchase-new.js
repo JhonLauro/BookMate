@@ -139,7 +139,11 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const submitBtn = form.querySelector('.btn-purchase');
+            const submitBtn = document.querySelector('.btn-purchase');
+            if (!submitBtn) {
+                console.error('Submit button not found');
+                return;
+            }
             const originalText = submitBtn.innerHTML;
             
             submitBtn.disabled = true;
@@ -149,10 +153,10 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 const formData = new FormData(form);
                 
-                console.log('Submitting to: /purchase/');
+                console.log('Submitting to: /purchase/purchase/');
                 console.log('Form data:', Object.fromEntries(formData));
                 
-                const response = await fetch('/purchase/', {
+                const response = await fetch('/purchase/purchase/', {
                     method: 'POST',
                     headers: {
                         'X-CSRFToken': getCookie('csrftoken'),

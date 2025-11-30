@@ -78,7 +78,7 @@
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
           </svg>
-          Edit Profile
+          <span style="position: relative; z-index: 1;">Edit Profile</span>
         </a>
       </div>
 
@@ -248,7 +248,34 @@
     });
   </script>
   
+  <script type="module">
+    import { showNotification, showSuccess, showError } from "{% static 'js/utils/notifications.js' %}";
+    
+    // Make notification functions available globally
+    window.showNotification = showNotification;
+    window.showSuccess = showSuccess;
+    window.showError = showError;
+  </script>
+  
   <script>
+    // Check for update success message from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const updated = urlParams.get('updated');
+    
+    if (updated === 'success') {
+      // Show notification
+      if (window.showNotification) {
+        window.showNotification('✅ Profile updated successfully!', 'success');
+      }
+      // Clean URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (updated === 'password') {
+      if (window.showNotification) {
+        window.showNotification('✅ Profile updated successfully! Password changed.', 'success');
+      }
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     // Set progress bar widths from data attributes
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.mini-progress-fill').forEach(function(bar) {
@@ -264,7 +291,7 @@
     
     async function loadPurchaseHistory() {
       try {
-        const response = await fetch('/api/purchase_history/');
+        const response = await fetch('/purchase/history/');
         const data = await response.json();
         
         const container = document.getElementById('purchaseHistoryContainer');
