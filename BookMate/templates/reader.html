@@ -3,172 +3,543 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Book Reader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Reader - BookMate</title>
 
 <style>
-  body {
+  * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
     font-family: 'Georgia', 'Times New Roman', serif;
-    background: linear-gradient(to bottom, #E5D4B8, #D4B89C);
-    color: #3B2B1C;
+    background: 
+      linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.15) 100%),
+      repeating-linear-gradient(
+        90deg,
+        #8B6F47 0px,
+        #A0825A 2px,
+        #8B6F47 4px
+      );
+    color: #2c3e50;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    overflow: hidden;
   }
 
-  /* Subtle paper texture */
+  /* Wooden desk texture with items */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(139, 90, 43, 0.03) 2px,
-      rgba(139, 90, 43, 0.03) 4px
-    );
+    background-image: 
+      radial-gradient(circle at 15% 20%, rgba(198, 163, 79, 0.3) 0%, transparent 8%),
+      radial-gradient(circle at 85% 25%, rgba(160, 130, 90, 0.25) 0%, transparent 6%),
+      radial-gradient(circle at 10% 80%, rgba(198, 163, 79, 0.28) 0%, transparent 7%),
+      radial-gradient(circle at 90% 85%, rgba(180, 150, 110, 0.25) 0%, transparent 5%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.02) 3px,
+        rgba(0, 0, 0, 0.02) 6px
+      ),
+      linear-gradient(90deg, 
+        rgba(160, 130, 90, 0.5) 0%,
+        rgba(180, 150, 110, 0.6) 20%,
+        rgba(160, 130, 90, 0.55) 40%,
+        rgba(170, 140, 100, 0.6) 60%,
+        rgba(160, 130, 90, 0.5) 80%,
+        rgba(180, 150, 110, 0.55) 100%
+      );
     pointer-events: none;
     z-index: 0;
   }
 
+  /* Desk accessories shadows */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(0, 0, 0, 0.2) 0%, transparent 8%),
+      radial-gradient(ellipse at 85% 25%, rgba(0, 0, 0, 0.18) 0%, transparent 6%),
+      radial-gradient(ellipse at 10% 80%, rgba(0, 0, 0, 0.19) 0%, transparent 7%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
   .reader-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 24px;
-    background: linear-gradient(135deg, #F5EFE6 0%, #E8DCC8 100%);
-    border-bottom: 3px solid #C6A34F;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    padding: 1rem 2rem;
+    background: 
+      linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,240,230,0.92) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 3px solid #8B5A2B;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.15),
+      inset 0 -1px 0 rgba(139, 90, 43, 0.3);
     position: relative;
-    z-index: 2;
+    z-index: 10;
+    animation: slideDown 0.5s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+    letter-spacing: 0.3px;
+  }
+
+  .back-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.5);
+  }
+
+  .back-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(108, 117, 125, 0.4);
+  }
+
+  .back-arrow {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+  }
+
+  .back-btn:hover .back-arrow {
+    transform: translateX(-4px);
   }
 
   .reader-title {
-    font-size: 18px;
+    font-size: 1.4rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
+    background: linear-gradient(135deg, #C6A34F 0%, #8B5A2B 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.5px;
   }
 
-  .back-btn {
-    background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+  #chapterSelect {
+    padding: 0.7rem 1.2rem;
+    padding-right: 2.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(198, 163, 79, 0.3);
+    background: white;
+    color: #2c3e50;
     font-weight: 600;
+    font-family: 'Georgia', 'Times New Roman', serif;
     cursor: pointer;
-    transition: 0.25s;
-    box-shadow: 0 4px 12px rgba(198,163,79,0.4);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C6A34F' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    min-width: 180px;
   }
 
-  .back-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(198,163,79,0.6);
+  #chapterSelect:hover {
+    border-color: #C6A34F;
+    box-shadow: 0 4px 12px rgba(198, 163, 79, 0.3);
+    transform: translateY(-1px);
   }
 
+  #chapterSelect:focus {
+    outline: none;
+    border-color: #C6A34F;
+    box-shadow: 0 0 0 3px rgba(198, 163, 79, 0.2);
+  }
+
+  /* Reader Container */
   .reader-container {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 24px;
+    align-items: center;
+    padding: 2rem;
     z-index: 1;
+    overflow: hidden;
+    perspective: 2500px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Open book container */
+  .book-wrapper {
+    display: flex;
+    position: relative;
+    transform-style: preserve-3d;
+    gap: 0;
+  }
+
+  /* Book spine in the middle */
+  .book-spine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    transform: translateX(-50%) translateZ(5px);
+    background: linear-gradient(
+      to right,
+      rgba(139, 90, 43, 0.4) 0%,
+      rgba(80, 50, 30, 0.7) 50%,
+      rgba(139, 90, 43, 0.4) 100%
+    );
+    box-shadow: 
+      inset 0 0 10px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+  }
+
+  /* Page containers */
+  .page-side {
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .page-left {
+    transform-origin: right center;
+  }
+
+  .page-right {
+    transform-origin: left center;
+  }
+
+  /* Animated flipping page overlay */
+  .flipping-page {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    backface-visibility: hidden;
+  }
+
+  /* Back side of the page (shows during flip) */
+  .flipping-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #f8f6f0 0%, #f5f3ed 100%);
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Right page flips forward (right to left) */
+  .flipping-page.flip-forward {
+    right: 0;
+    transform-origin: left center;
+    animation: flipRightToLeft 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    z-index: 200;
+  }
+
+  /* Left page flips backward (left to right) */
+  .flipping-page.flip-backward {
+    left: 0;
+    transform-origin: right center;
+    animation: flipLeftToRight 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    z-index: 200;
+  }
+
+  @keyframes flipRightToLeft {
+    0% {
+      transform: perspective(2500px) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(2500px) rotateY(-90deg);
+      box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      transform: perspective(2500px) rotateY(-180deg);
+    }
+  }
+
+  @keyframes flipLeftToRight {
+    0% {
+      transform: perspective(2500px) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(2500px) rotateY(90deg);
+      box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      transform: perspective(2500px) rotateY(180deg);
+    }
   }
 
   canvas {
-    background: #fffdf8;
-    border-radius: 14px;
+    background: 
+      linear-gradient(to right, rgba(0,0,0,0.02) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.02) 100%),
+      linear-gradient(to bottom, #fffefb 0%, #fffdf8 100%);
+    border-radius: 2px;
     box-shadow:
-      0 20px 40px rgba(0,0,0,0.35),
-      inset 0 0 0 6px rgba(139,90,43,0.15);
-
-    /* ✅ THIS CONTROLS THE PERFECT BOOK SIZE */
+      0 8px 30px rgba(0, 0, 0, 0.2),
+      0 20px 60px rgba(0, 0, 0, 0.15),
+      inset 0 -2px 8px rgba(0, 0, 0, 0.05);
     width: auto;
     height: auto;
-    max-width: 650px;     /* smaller, book-like width */
-    max-height: 80vh;    /* prevents vertical overflow */
+    max-width: 450px;
+    max-height: 70vh;
+    position: relative;
+    border: 1px solid rgba(139, 90, 43, 0.15);
+    display: block;
   }
 
+  #leftPage {
+    border-right: 3px solid rgba(139, 90, 43, 0.3);
+    box-shadow: 
+      5px 0 15px -5px rgba(0, 0, 0, 0.3),
+      inset -3px 0 8px -3px rgba(139, 90, 43, 0.15);
+  }
+
+  #rightPage {
+    border-left: 3px solid rgba(139, 90, 43, 0.3);
+    box-shadow: 
+      -5px 0 15px -5px rgba(0, 0, 0, 0.3),
+      inset 3px 0 8px -3px rgba(139, 90, 43, 0.15);
+  }
+
+  canvas:hover {
+    box-shadow:
+      -10px 0 20px -5px rgba(0, 0, 0, 0.35),
+      10px 0 20px -5px rgba(0, 0, 0, 0.35),
+      0 10px 40px rgba(0, 0, 0, 0.25),
+      0 25px 70px rgba(0, 0, 0, 0.18),
+      inset 3px 0 10px -3px rgba(139, 90, 43, 0.15),
+      inset -3px 0 10px -3px rgba(139, 90, 43, 0.15);
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  /* Controls */
   .controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 18px;
-    padding: 18px;
-    background: linear-gradient(135deg, #F5EFE6 0%, #E8DCC8 100%);
-    border-top: 3px solid #C6A34F;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-    z-index: 2;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: 
+      linear-gradient(0deg, rgba(255,255,255,0.95) 0%, rgba(245,240,230,0.92) 100%);
+    backdrop-filter: blur(10px);
+    border-top: 3px solid #8B5A2B;
+    box-shadow: 
+      0 -4px 20px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(139, 90, 43, 0.3);
+    z-index: 10;
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
   .controls button {
     background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
     border: none;
     color: white;
-    padding: 12px 22px;
-    border-radius: 24px;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 1rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
     cursor: pointer;
-    transition: 0.25s;
-    box-shadow: 0 4px 14px rgba(198,163,79,0.35);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(198, 163, 79, 0.35);
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .controls button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .controls button:hover::before {
+    width: 300px;
+    height: 300px;
   }
 
   .controls button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(198,163,79,0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(198, 163, 79, 0.5);
+  }
+
+  .controls button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(198, 163, 79, 0.4);
+  }
+
+  .controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .controls button:disabled:hover {
+    box-shadow: 0 4px 14px rgba(198, 163, 79, 0.35);
   }
 
   #page-number {
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 700;
-    color: #8B5A2B;
-    min-width: 120px;
+    color: #2c3e50;
+    min-width: 140px;
     text-align: center;
-    background: rgba(198,163,79,0.15);
-    padding: 6px 14px;
-    border-radius: 16px;
-    border: 1px solid rgba(198,163,79,0.3);
+    background: linear-gradient(135deg, rgba(198, 163, 79, 0.1), rgba(168, 137, 57, 0.15));
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    border: 2px solid rgba(198, 163, 79, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
   }
 
-  #chapterSelect {
-  padding: 10px 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(198,163,79,0.5);
-  background: linear-gradient(135deg, #F5EFE6, #E8DCC8);
-  color: #3B2B1C;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
+  #page-number:hover {
+    border-color: #C6A34F;
+    box-shadow: 0 4px 12px rgba(198, 163, 79, 0.3);
+  }
 
+  /* Responsive */
+  @media (max-width: 768px) {
+    .reader-header {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .header-left {
+      width: 100%;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .back-btn, #chapterSelect {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .reader-title {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .controls {
+      gap: 0.8rem;
+      padding: 1rem;
+    }
+
+    .controls button {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    #page-number {
+      min-width: 100px;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    canvas {
+      max-width: 95%;
+      max-height: 60vh;
+    }
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(198, 163, 79, 0.2);
+    border-top-color: #C6A34F;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
 
 </head>
 
 <body>
 
-  <!-- ✅ TOP BAR -->
+  <!-- Header -->
   <div class="reader-header">
-    <button onclick="window.history.back()" class="back-btn">← Back to Preview</button>
-    <select id="chapterSelect"></select>
-    <div class="reader-title">The Chronicles of Random Thought</div>
+    <div class="header-left">
+      <a href="javascript:history.back()" class="back-btn">
+        <span class="back-arrow">←</span>
+        <span>Back to Preview</span>
+      </a>
+      <select id="chapterSelect"></select>
+    </div>
+    <div class="reader-title">📖 Book Reader</div>
   </div>
 
-  <!-- ✅ PDF VIEW -->
+  <!-- PDF View -->
   <div class="reader-container">
-    <canvas id="pdf-viewer" data-book-id="{{ request.GET.olid }}"></canvas>
+    <div class="book-wrapper">
+      <div class="book-spine"></div>
+      <div class="page-side page-left" id="leftPageContainer">
+        <canvas id="leftPage"></canvas>
+      </div>
+      <div class="page-side page-right" id="rightPageContainer">
+        <canvas id="rightPage" data-book-id="{{ request.GET.olid }}"></canvas>
+      </div>
+    </div>
   </div>
 
-  <!-- ✅ CONTROLS -->
+  <!-- Controls -->
   <div class="controls">
-    <button onclick="prevPage()">Previous</button>
+    <button onclick="prevPage()" id="prevBtn">← Previous</button>
     <span id="page-number">Page 1</span>
-    <button onclick="nextPage()">Next</button>
+    <button onclick="nextPage()" id="nextBtn">Next →</button>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>

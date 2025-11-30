@@ -1,32 +1,31 @@
 <!-- Purchase Modal -->
 <div id="purchaseModal" class="modal">
   <div class="modal-content purchase-modal-content">
-    <span class="close-modal" onclick="closePurchaseModal()">&times;</span>
-    
     <div class="purchase-header">
-      <h2>🛒 Complete Your Purchase</h2>
-      <p class="modal-subtitle">Secure checkout for your book</p>
-    </div>
-
-    <!-- Book Summary -->
-    <div class="book-purchase-summary">
-      <img id="purchaseBookCover" src="" alt="Book Cover" class="purchase-book-cover">
-      <div class="purchase-book-info">
-        <h3 id="purchaseBookTitle"></h3>
-        <p id="purchaseBookAuthor"></p>
-        <p class="purchase-price" id="purchaseBookPrice"></p>
-      </div>
+      <span class="close-modal" onclick="closePurchaseModal()">&times;</span>
+      <h2>Complete Your Purchase</h2>
+      <p class="modal-subtitle">Secure checkout for your digital book</p>
     </div>
 
     <!-- Payment Form -->
     <form id="purchaseForm">
-      <input type="hidden" id="purchaseBookId" name="book_id">
-      <input type="hidden" id="purchaseBookOlid" name="olid">
+      <div class="modal-form-container">
+        <input type="hidden" id="purchaseBookId" name="book_id">
+        <input type="hidden" id="purchaseBookOlid" name="olid">
+        
+        <!-- Book Summary -->
+        <div class="book-purchase-summary">
+          <img id="purchaseBookCover" src="" alt="Book Cover" class="purchase-book-cover">
+          <div class="purchase-book-info">
+            <h3 id="purchaseBookTitle"></h3>
+            <p id="purchaseBookAuthor"></p>
+            <p class="purchase-price" id="purchaseBookPrice"></p>
+          </div>
+        </div>
       
       <!-- Payment Method -->
       <div class="form-group">
         <label class="form-label">
-          <span class="label-icon">💳</span>
           Payment Method
         </label>
         <select id="paymentMethod" name="payment_method" class="form-input" required>
@@ -40,7 +39,6 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">
-            <span class="label-icon">🔢</span>
             Card Number
           </label>
           <input 
@@ -57,7 +55,6 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">
-            <span class="label-icon">👤</span>
             Cardholder Name
           </label>
           <input 
@@ -73,7 +70,6 @@
       <div class="form-row two-col">
         <div class="form-group">
           <label class="form-label">
-            <span class="label-icon">📅</span>
             Expiry Date
           </label>
           <input 
@@ -87,7 +83,6 @@
         </div>
         <div class="form-group">
           <label class="form-label">
-            <span class="label-icon">🔒</span>
             CVV
           </label>
           <input 
@@ -103,7 +98,7 @@
 
       <!-- Billing Address -->
       <div class="billing-section">
-        <h3 class="section-title">📍 Billing Address</h3>
+        <h3 class="section-title">Billing Address</h3>
         
         <div class="form-group">
           <label class="form-label">Street Address</label>
@@ -170,18 +165,17 @@
           <span>I agree to the terms and conditions</span>
         </label>
       </div>
-
-      <!-- Action Buttons -->
-      <div class="modal-actions">
-        <button type="button" class="btn-cancel" onclick="closePurchaseModal()">
-          <span class="btn-icon">✕</span>
-          Cancel
-        </button>
-        <button type="submit" class="btn-purchase">
-          <span class="btn-icon">💰</span>
-          Complete Purchase
-        </button>
       </div>
     </form>
+
+    <!-- Action Buttons -->
+    <div class="modal-actions">
+      <button type="button" class="btn btn-cancel" onclick="closePurchaseModal()">
+        Cancel
+      </button>
+      <button type="submit" form="purchaseForm" class="btn btn-purchase">
+        Complete Purchase
+      </button>
+    </div>
   </div>
 </div>

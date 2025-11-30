@@ -56,7 +56,7 @@ function openPurchaseModal(bookData) {
     if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.classList.remove('processing');
-        submitBtn.innerHTML = '<span class="btn-icon">💰</span> Complete Purchase';
+        submitBtn.innerHTML = 'Complete Purchase';
     }
     
     // Reset form
