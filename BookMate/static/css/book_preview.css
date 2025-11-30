@@ -400,38 +400,24 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background: #6c757d;
+  background: linear-gradient(180deg, #7A8288 0%, #6C757D 100%);
   color: white;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-family: 'Georgia', 'Times New Roman', serif;
-  letter-spacing: 0.3px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  border: 2px solid transparent;
-}
-
-.back-button:hover {
-  transform: translateY(-2px);
-  background: #5a6268;
-  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
-  border-color: #545b62;
-}
-
-.back-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 3px solid #5A6268;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .back-arrow {
   font-size: 1.3rem;
-  transition: transform 0.3s ease;
-}
-
-.back-button:hover .back-arrow {
-  transform: translateX(-4px);
 }
 
 /* ========== Layout ========== */
@@ -499,24 +485,22 @@ body {
 }
 
 .add-button {
-  background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%);
   color: white;
-  border: none;
+  border: 3px solid #A88939;
   padding: 0.8rem 2rem;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-top: 1.5rem;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-family: 'Georgia', 'Times New Roman', serif;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(198, 163, 79, 0.4);
-}
-
-.add-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(198, 163, 79, 0.4);
+  box-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Book Links Styles - Formal Clean Design */
@@ -532,8 +516,8 @@ body {
 .book-link-btn {
   width: 100%;
   padding: 1rem 1.5rem;
-  border: 2px solid;
-  border-radius: 10px;
+  border: 3px solid;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.95rem;
@@ -542,69 +526,28 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  transition: all 0.3s ease;
   font-family: 'Georgia', 'Times New Roman', serif;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   position: relative;
-  overflow: hidden;
-}
-
-.book-link-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s ease;
-}
-
-.book-link-btn:hover::before {
-  left: 100%;
+  box-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
 .read-online-btn {
-  background: white;
-  color: #4A90E2;
-  border-color: #4A90E2;
-  box-shadow: 0 3px 12px rgba(74, 144, 226, 0.15);
-}
-
-.read-online-btn:hover {
-  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  background: linear-gradient(180deg, #5B9BD5 0%, #4A7FB8 100%);
   color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.3);
-}
-
-.read-online-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 12px rgba(74, 144, 226, 0.25);
+  border-color: #3D6A9C;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .buy-btn {
-  background: white;
-  color: #50C878;
-  border-color: #50C878;
-  box-shadow: 0 3px 12px rgba(80, 200, 120, 0.15);
-}
-
-.buy-btn:hover {
-  background: linear-gradient(135deg, #50C878 0%, #3DA860 100%);
+  background: linear-gradient(180deg, #5CB85C 0%, #4A9D4A 100%);
   color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(80, 200, 120, 0.3);
-}
-
-.buy-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 12px rgba(80, 200, 120, 0.25);
-}
-
-.buy-btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(80, 200, 120, 0.3);
+  border-color: #3D8B3D;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Right section (Details + Recommendations) */

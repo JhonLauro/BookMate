@@ -74,7 +74,7 @@
       <!-- Book Links -->
       <div class="book-links">
         <a href="/read/?olid={{ olid }}" class="book-link-btn read-online-btn">
-          📖 Read Online
+          📖 Read Book
         </a>
         <button class="book-link-btn buy-btn" onclick="openPurchaseModal({
           id: '',
@@ -83,7 +83,7 @@
           author: '{% if authors %}{{ authors|join:", "|escapejs }}{% else %}Unknown Author{% endif %}',
           cover_url: '{{ cover_url|default:"/static/images/no-cover.png" }}'
         })">
-          🛒 Buy Book
+          Purchase Book
         </button>
       </div>
     </div>
