@@ -1,25 +1,22 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
-from django.contrib import messages
-from .forms import RegisterForm, LoginForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .models import UserBookList, UserProfile, Purchase
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from .models import UserBookList
+from profile_page.models import UserProfile
+from purchase.models import Purchase
 from django.core.cache import cache
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import F
 from django.conf import settings
-from supabase import create_client, Client
-from decimal import Decimal
+from time import time
 import requests
-import uuid
-import os
 import json
-import secrets
 
-#register function
+
+# Dashboard view (moved from below)
+
 def register_view(request):
     # Redirect authenticated users to dashboard
     if request.user.is_authenticated:

@@ -19,7 +19,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # Go up to project root
 
 
 # Quick-start development settings - unsuitable for production
@@ -49,6 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'library',
+    'home',
+    'login',
+    'sign_up',
+    'profile_page',
+    'genre_setup',
+    'reader',
+    'purchase',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +69,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'BookMate.urls'
+ROOT_URLCONF = 'core.urls'
 
 CACHES = {
     "default": {
@@ -74,7 +81,7 @@ CACHES = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'BookMate' / 'templates'],  # Project-level templates folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'BookMate.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
@@ -137,8 +144,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'BookMate' / 'static']  # Project-level static folder
+STATIC_ROOT = BASE_DIR / 'BookMate' / 'staticfiles'
 
 # WhiteNoise configuration for serving static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

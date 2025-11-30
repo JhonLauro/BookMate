@@ -503,7 +503,7 @@ h3::before {
 .book-card {
   background: linear-gradient(135deg, #F0E6D8 0%, #E5D4B8 100%);
   border-radius: 15px;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
   text-align: center;
   box-shadow: 0 5px 20px rgba(139, 90, 43, 0.2);
   transition: all 0.3s ease;
@@ -893,25 +893,26 @@ h3::before {
 .book-actions {
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding: 0 0.75rem 0.75rem 0.75rem;
+  margin-top: 0.75rem;
+  padding: 0;
+  width: 100%;
 }
 
 .favorite-btn,
 .edit-btn,
 .remove-btn {
   flex: 1;
-  padding: 0.7rem 0.6rem;
+  padding: 0.5rem 0.4rem;
   border: 3px solid;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.8rem;
-  line-height: 1.3;
-  min-height: 40px;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  min-height: 36px;
   color: white;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   font-family: 'Georgia', 'Times New Roman', serif;
   box-shadow: 
     0 2px 0 rgba(0, 0, 0, 0.1),
@@ -928,6 +929,21 @@ h3::before {
   max-width: 50px;
   position: relative;
   border-color: #B8923D;
+  transition: all 0.2s ease;
+}
+
+.favorite-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.favorite-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .favorite-btn .star-icon {
@@ -949,11 +965,43 @@ h3::before {
 .edit-btn {
   background: linear-gradient(180deg, #6BA3D0 0%, #4A7FB8 100%);
   border-color: #3D6A9C;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #7AB3E0 0%, #5A8FC8 100%);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.edit-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .remove-btn {
   background: linear-gradient(180deg, #D97676 0%, #C54B4B 100%);
   border-color: #A63939;
+  transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #E98686 0%, #D55B5B 100%);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.remove-btn:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Edit Book Modal */
@@ -1161,6 +1209,7 @@ h3::before {
     0 2px 0 rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 .btn-icon {
@@ -1174,10 +1223,40 @@ h3::before {
   border-color: #3D8B3D;
 }
 
+.btn-save:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #6CC86C 0%, #5AAD5A 100%);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-save:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
 .btn-reset {
   background: linear-gradient(180deg, #B0B0B0 0%, #9E9E9E 100%);
   color: white;
   border-color: #7A7A7A;
+}
+
+.btn-reset:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #C0C0C0 0%, #AEAEAE 100%);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-reset:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Loading state for buttons */
@@ -1185,6 +1264,11 @@ h3::before {
 .btn-reset:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+}
+
+.btn-save:disabled:hover,
+.btn-reset:disabled:hover {
   transform: none;
 }
 

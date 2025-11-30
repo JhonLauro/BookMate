@@ -21,8 +21,8 @@
   <!-- Center navigation links -->
   <nav class="nav-center">
     <a href="#hero" class="nav-link underline">Home</a>
-    <a href="#about" class="nav-link underline">About</a>
     <a href="#features" class="nav-link underline">Features</a>
+    <a href="#about" class="nav-link underline">About</a>
   </nav>
 
   <!-- Sign up / Sign in buttons (unchanged design) -->
@@ -242,6 +242,33 @@
   </div>
 
   <script>
+    // Smooth scroll behavior for navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // If clicking "about", scroll to show the entire page including footer
+          if (targetId === 'about') {
+            // Use a small delay to ensure the page is fully loaded
+            setTimeout(() => {
+              window.scrollTo({
+                top: document.documentElement.scrollHeight - window.innerHeight,
+                behavior: 'smooth'
+              });
+            }, 100);
+          } else {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+
     // Show Django messages as notifications - runs immediately
     function showNotifications() {
       const messagesContainer = document.getElementById('django-messages');
