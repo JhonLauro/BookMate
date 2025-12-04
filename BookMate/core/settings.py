@@ -154,3 +154,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Configuration for Password Reset (Brevo API)
+# Using Brevo API instead of SMTP (works on Render.com free tier)
+EMAIL_BACKEND = 'core.brevo_backend.BrevoAPIBackend'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'BookMate Support <jhonlauro01@gmail.com>')
+EMAIL_SUBJECT_PREFIX = '[BookMate] '

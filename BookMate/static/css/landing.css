@@ -285,40 +285,72 @@ body::before {
 
 .btn-signup {
   background: transparent;
-  border: 2px solid #C6A34F;
+  border: 3px solid #C6A34F;
   color: #C6A34F;
-  padding: 0.6rem 1.5rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  font-weight: 600;
+  padding: 0.65rem 1.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 700;
   text-decoration: none;
   display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  box-shadow: 
+    0 2px 0 rgba(198, 163, 79, 0.3),
+    inset 0 1px 0 rgba(198, 163, 79, 0.2);
 }
 
 .btn-signup:hover {
-  background: #C6A34F !important;
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%) !important;
   color: white !important;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(198, 163, 79, 0.4);
+  box-shadow: 
+    0 4px 8px rgba(198, 163, 79, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: #A88939;
+}
+
+.btn-signup:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(198, 163, 79, 0.2);
 }
 
 .btn-signin {
-  background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%);
   color: white !important;
-  padding: 0.6rem 1.5rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(198, 163, 79, 0.3);
-  font-weight: 600;
+  padding: 0.65rem 1.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  font-weight: 700;
   text-decoration: none;
   display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  border: 3px solid #A88939;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-signin:hover {
-  background: linear-gradient(135deg, #A88939 0%, #8B7028 100%) !important;
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%) !important;
   color: white !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(198, 163, 79, 0.5);
+  box-shadow: 
+    0 4px 8px rgba(198, 163, 79, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-signin:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* === HERO SECTION - FIXED === */
@@ -1167,30 +1199,45 @@ body::before {
 }
 
 .btn-modal-primary {
-  background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%);
+  border: 3px solid #A88939;
   color: white;
-  padding: 1rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   margin-top: 0.5rem;
-  box-shadow: 0 4px 15px rgba(198, 163, 79, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-family: 'Georgia', 'Times New Roman', serif;
 }
 
 .btn-modal-primary:hover {
-  background: linear-gradient(135deg, #A88939 0%, #8B7028 100%);
+  background: linear-gradient(180deg, #D4B066 0%, #C6A34F 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(198, 163, 79, 0.5);
+  box-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-modal-primary:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .modal-footer {
   text-align: center;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 2px solid rgba(198, 163, 79, 0.2);
+  border-top: none;
 }
 
 .modal-footer p {
@@ -1208,6 +1255,31 @@ body::before {
 .modal-footer a:hover {
   color: #A88939;
   text-decoration: underline;
+}
+
+.forgot-password-link {
+  text-align: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-top: 1px solid rgba(198, 163, 79, 0.15);
+  border-bottom: 1px solid rgba(198, 163, 79, 0.15);
+}
+
+.forgot-password-link a {
+  color: #8B7028;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.forgot-password-link a:hover {
+  color: #C6A34F;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(198, 163, 79, 0.3);
 }
 
 /* Modal responsive */

@@ -601,6 +601,55 @@ body::after {
   text-decoration: underline;
 }
 
+/* === PASSWORD RESET PAGES === */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.form-wrapper {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(139, 90, 43, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid rgba(198, 163, 79, 0.2);
+}
+
+.book-icon {
+  font-size: 48px;
+  margin-bottom: 1rem;
+}
+
+.form-title {
+  font-size: 2rem;
+  color: #3B2B1C;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.form-subtitle {
+  color: #5A4A3A;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.auth-form {
+  text-align: left;
+}
+
 /* === ERROR/SUCCESS MESSAGES === */
 .messages,
 .error {
@@ -628,6 +677,10 @@ body::after {
   .auth-box {
     padding: 2rem 1.5rem;
     width: 90%;
+  }
+
+  .form-wrapper {
+    padding: 2rem 1.5rem;
   }
 
   .navbar {
