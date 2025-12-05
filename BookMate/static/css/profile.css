@@ -813,6 +813,7 @@ body {
   padding: 1.2rem;
   align-items: center;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .book-card:hover {
@@ -1201,6 +1202,136 @@ button.btn-primary:hover {
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(198, 163, 79, 0.3);
+}
+
+/* Bio Card */
+.bio-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #E8E5DF;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.bio-content {
+  margin-bottom: 1rem;
+}
+
+.bio-text {
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 1rem;
+  background: #FAFAF9;
+  border-radius: 8px;
+}
+
+.bio-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 2px solid #E8E5DF;
+  border-radius: 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.bio-textarea:focus {
+  outline: none;
+  border-color: #C6A34F;
+  box-shadow: 0 0 0 3px rgba(198, 163, 79, 0.1);
+}
+
+.bio-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.edit-bio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  background: white;
+  color: #C6A34F;
+  border: 2px solid #C6A34F;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.925rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-bio-btn:hover {
+  background: #C6A34F;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(198, 163, 79, 0.3);
+}
+
+.edit-bio-btn svg {
+  flex-shrink: 0;
+}
+
+.bio-edit-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.save-bio-btn,
+.cancel-bio-btn {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.925rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-bio-btn {
+  background: #C6A34F;
+  color: white;
+}
+
+.save-bio-btn:hover {
+  background: #A88939;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(198, 163, 79, 0.3);
+}
+
+.cancel-bio-btn {
+  background: white;
+  color: #718096;
+  border: 2px solid #E2E8F0;
+}
+
+.cancel-bio-btn:hover {
+  background: #F7FAFC;
+  border-color: #CBD5E0;
+}
+
+.char-count {
+  color: #718096;
+  font-size: 0.85rem;
+  margin-left: auto;
+}
+
+.char-count #char-count {
+  font-weight: 600;
+  color: #4a5568;
 }
 
 /* Purchase History Styles */

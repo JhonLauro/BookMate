@@ -17,6 +17,12 @@ class UserProfile(models.Model):
         null=True,
         help_text="URL to profile picture stored in Supabase bucket"
     )
+    bio = models.TextField(
+        max_length=500,
+        blank=True,
+        null=True,
+        help_text="User bio/description"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

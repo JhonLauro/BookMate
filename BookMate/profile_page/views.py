@@ -31,13 +31,16 @@ def profile_view(request):
     # Get user's favorite genres and profile picture from profile
     user_favorite_genres = []
     profile_picture_url = None
+    user_bio = None
     try:
         profile = UserProfile.objects.get(user=user)
         user_favorite_genres = profile.get_favorite_genres_list()
         profile_picture_url = profile.profile_picture_url
+        user_bio = profile.bio
     except UserProfile.DoesNotExist:
         user_favorite_genres = []
         profile_picture_url = None
+        user_bio = None
     
     context = {
         'user': user,
@@ -47,6 +50,7 @@ def profile_view(request):
         'favorite_books_count': favorite_books.count(),
         'user_favorite_genres': user_favorite_genres,
         'profile_picture_url': profile_picture_url,
+        'user_bio': user_bio,
         'reading_books': books_with_progress[:100],  # Show 100 currently reading
         'completed_books': finished_books[:100],  # Show 100 finished
         'favorite_books': favorite_books[:100],  # Show 100 favorite books
@@ -77,6 +81,19 @@ def edit_profile_view(request):
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
+        # Check if username is taken by another user
+        if username != user.username and User.objects.filter(username=username).exists():
+            try:
+                profile = UserProfile.objects.get(user=user)
+                profile_picture_url = profile.profile_picture_url
+            except UserProfile.DoesNotExist:
+                profile_picture_url = None
+            return render(request, 'edit_profile.html', {
+                "user": user,
+                "profile_picture_url": profile_picture_url,
+                "error_message": "Username already taken!"
+            })
+
         # Update basic info
         user.username = username
         user.email = email
@@ -85,10 +102,6 @@ def edit_profile_view(request):
         password_changed = False
         if password1 and password1 == password2:
             user.set_password(password1)
-            user.save()
-            # Re-authenticate the user after password change
-            from django.contrib.auth import update_session_auth_hash
-            update_session_auth_hash(request, user)
             password_changed = True
         elif password1 or password2:
             # Refresh profile picture URL before re-rendering
@@ -103,13 +116,31 @@ def edit_profile_view(request):
                 "error_message": "Passwords do not match!"
             })
 
-        user.save()
-        # Redirect with success parameter instead of using Django messages
-        from django.shortcuts import redirect
-        from django.urls import reverse
-        if password_changed:
-            return redirect(reverse('profile') + '?updated=password')
-        return redirect(reverse('profile') + '?updated=success')
+        try:
+            user.save()
+            # Re-authenticate the user after password change
+            if password_changed:
+                from django.contrib.auth import update_session_auth_hash
+                update_session_auth_hash(request, user)
+            
+            # Redirect with success parameter
+            from django.shortcuts import redirect
+            from django.urls import reverse
+            if password_changed:
+                return redirect(reverse('profile') + '?updated=password')
+            return redirect(reverse('profile') + '?updated=success')
+        except Exception as e:
+            # Handle any other database errors
+            try:
+                profile = UserProfile.objects.get(user=user)
+                profile_picture_url = profile.profile_picture_url
+            except UserProfile.DoesNotExist:
+                profile_picture_url = None
+            return render(request, 'edit_profile.html', {
+                "user": user,
+                "profile_picture_url": profile_picture_url,
+                "error_message": "Error updating profile. Please try again."
+            })
 
     return render(request, 'edit_profile.html', {
         "user": user,
@@ -191,4 +222,47 @@ def upload_profile_picture(request):
         return JsonResponse({
             "success": False,
             "message": f"Upload failed: {str(e)}"
+        }, status=500)
+
+
+def update_bio(request):
+    """Handle bio update via AJAX POST request"""
+    if not request.user.is_authenticated:
+        return JsonResponse({"success": False, "message": "Not authenticated"}, status=403)
+    
+    if request.method != "POST":
+        return JsonResponse({"success": False, "message": "Invalid request method"}, status=400)
+    
+    import json
+    try:
+        data = json.loads(request.body)
+        bio_text = data.get('bio', '').strip()
+        
+        # Validate bio length
+        if len(bio_text) > 500:
+            return JsonResponse({
+                "success": False,
+                "message": "Bio is too long. Maximum 500 characters allowed."
+            }, status=400)
+        
+        # Get or create user profile
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
+        profile.bio = bio_text if bio_text else None
+        profile.save()
+        
+        return JsonResponse({
+            "success": True,
+            "message": "Bio updated successfully!",
+            "bio": profile.bio
+        })
+        
+    except json.JSONDecodeError:
+        return JsonResponse({
+            "success": False,
+            "message": "Invalid JSON data"
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": f"Update failed: {str(e)}"
         }, status=500)
