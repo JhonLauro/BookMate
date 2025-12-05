@@ -24,21 +24,41 @@ if (savedPage) {
 fetch("/api/mock-book/")
   .then(res => res.json())
   .then(data => {
+    console.log("PDF URL:", data.pdf_url);
+    console.log("pdfjsLib available:", typeof pdfjsLib !== 'undefined');
+    
+    if (typeof pdfjsLib === 'undefined') {
+      console.error("PDF.js library not loaded!");
+      return;
+    }
+    
     pdfjsLib.getDocument(data.pdf_url).promise.then(pdf => {
+      console.log("PDF loaded successfully, pages:", pdf.numPages);
       pdfDoc = pdf;
       renderPages(currentPage);
       loadChapters();  
+    }).catch(error => {
+      console.error("Error loading PDF:", error);
     });
+  })
+  .catch(error => {
+    console.error("Error fetching mock book:", error);
   });
 
 
 function renderPages(leftPageNum) {
   const rightPageNum = leftPageNum + 1;
   
+  // Calculate responsive scale based on viewport - optimized for bigger readable text
+  const containerWidth = window.innerWidth;
+  const containerHeight = window.innerHeight - 140; // Account for header & footer
+  const maxCanvasWidth = (containerWidth - 60) / 2; // ~45% width with padding
+  const scale = Math.max(2.5, Math.min(3.5, (maxCanvasWidth / 220))); // Scale between 2.5-3.5 for large readable text
+  
   // Render left page
   if (leftPageNum <= pdfDoc.numPages) {
     pdfDoc.getPage(leftPageNum).then((page) => {
-      const viewport = page.getViewport({ scale: 1.8 });
+      const viewport = page.getViewport({ scale: scale });
       leftCanvas.width = viewport.width;
       leftCanvas.height = viewport.height;
       
@@ -54,7 +74,7 @@ function renderPages(leftPageNum) {
   // Render right page
   if (rightPageNum <= pdfDoc.numPages) {
     pdfDoc.getPage(rightPageNum).then((page) => {
-      const viewport = page.getViewport({ scale: 1.8 });
+      const viewport = page.getViewport({ scale: scale });
       rightCanvas.width = viewport.width;
       rightCanvas.height = viewport.height;
       
@@ -69,11 +89,64 @@ function renderPages(leftPageNum) {
   
   pageNumberDisplay.textContent = `Pages ${leftPageNum}-${rightPageNum} / ${pdfDoc.numPages}`;
   
-  // ✅ SAVE PROGRESS
+  // ✅ SAVE PROGRESS TO LOCALSTORAGE
   localStorage.setItem(STORAGE_KEY, leftPageNum);
+  
+  // ✅ SYNC PROGRESS TO DATABASE
+  syncProgressToDatabase(leftPageNum);
   
   // ✅ SYNC CHAPTER DROPDOWN
   highlightCurrentChapter(leftPageNum);
+}
+
+// Debounced function to sync progress to backend
+let syncTimeout;
+function syncProgressToDatabase(currentPage) {
+  // Clear previous timeout to debounce API calls
+  clearTimeout(syncTimeout);
+  
+  // Wait 1 second after user stops flipping pages before syncing
+  syncTimeout = setTimeout(() => {
+    const bookId = document.getElementById("rightPage").dataset.bookId;
+    if (!bookId) return;
+    
+    fetch('/api/update_progress/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify({
+        olid: bookId,
+        progress: currentPage
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        console.log('Progress synced to database:', currentPage);
+      }
+    })
+    .catch(error => {
+      console.error('Failed to sync progress:', error);
+    });
+  }, 1000);
+}
+
+// Helper function to get CSRF token
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
 }
 
 
@@ -199,7 +272,10 @@ function loadChapters() {
 
   select.onchange = function () {
     if (this.value) {
-      const targetPage = parseInt(this.value);
+      let targetPage = parseInt(this.value);
+      // Ensure target page is odd (left page) for proper spread display
+      if (targetPage % 2 === 0) targetPage -= 1;
+      
       const isForward = targetPage > currentPage;
       
       // Show page flipping animation for 3 seconds with speed ramping

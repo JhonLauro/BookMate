@@ -26,8 +26,9 @@
     color: #2c3e50;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   /* Wooden desk texture with items */
@@ -77,17 +78,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.6rem 1.5rem;
     background: 
       linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,240,230,0.92) 100%);
     backdrop-filter: blur(10px);
-    border-bottom: 3px solid #8B5A2B;
+    border-bottom: 2px solid #8B5A2B;
     box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.15),
+      0 3px 15px rgba(0, 0, 0, 0.12),
       inset 0 -1px 0 rgba(139, 90, 43, 0.3);
     position: relative;
     z-index: 10;
     animation: slideDown 0.5s ease-out;
+    transition: all 0.3s ease;
   }
 
   @keyframes slideDown {
@@ -186,11 +188,12 @@
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    align-items: flex-start;
+    padding: 1rem 0.5rem 5rem 0.5rem; /* Added bottom padding to prevent footer from covering text */
     z-index: 1;
-    overflow: hidden;
+    overflow: visible;
     perspective: 2500px;
+    min-height: 0;
   }
 
   @keyframes fadeIn {
@@ -204,6 +207,7 @@
     position: relative;
     transform-style: preserve-3d;
     gap: 0;
+    max-width: 95%;
   }
 
   /* Book spine in the middle */
@@ -212,7 +216,7 @@
     left: 50%;
     top: 0;
     bottom: 0;
-    width: 20px;
+    width: 2px;
     transform: translateX(-50%) translateZ(5px);
     background: linear-gradient(
       to right,
@@ -221,8 +225,7 @@
       rgba(139, 90, 43, 0.4) 100%
     );
     box-shadow: 
-      inset 0 0 10px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(0, 0, 0, 0.4);
+      inset 0 0 4px rgba(0, 0, 0, 0.3);
     z-index: 100;
   }
 
@@ -230,14 +233,17 @@
   .page-side {
     position: relative;
     transform-style: preserve-3d;
+    flex: 1;
   }
 
   .page-left {
     transform-origin: right center;
+    margin-right: -1px;
   }
 
   .page-right {
     transform-origin: left center;
+    margin-left: -1px;
   }
 
   /* Animated flipping page overlay */
@@ -316,10 +322,10 @@
       0 8px 30px rgba(0, 0, 0, 0.2),
       0 20px 60px rgba(0, 0, 0, 0.15),
       inset 0 -2px 8px rgba(0, 0, 0, 0.05);
-    width: auto;
+    width: 100%;
     height: auto;
-    max-width: 450px;
-    max-height: 70vh;
+    max-width: 100%;
+    max-height: none;
     position: relative;
     border: 1px solid rgba(139, 90, 43, 0.15);
     display: block;
@@ -355,8 +361,13 @@
     box-shadow: 
       0 -4px 20px rgba(0, 0, 0, 0.15),
       inset 0 1px 0 rgba(139, 90, 43, 0.3);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 10;
     animation: slideUp 0.5s ease-out;
+    transition: transform 0.3s ease;
   }
 
   @keyframes slideUp {
@@ -495,6 +506,59 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  /* Hide/Show Toggle Button */
+  .toggle-ui-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C6A34F 0%, #A88939 100%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 500;
+  }
+
+  .toggle-ui-btn svg {
+    transition: all 0.3s ease;
+  }
+
+  .toggle-ui-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #D4B45F 0%, #B89A49 100%);
+  }
+
+  .toggle-ui-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Hidden state for header and footer */
+  .reader-header.hidden {
+    display: none;
+  }
+
+  .controls.hidden {
+    transform: translateY(100%);
+  }
+
+  @media (max-width: 768px) {
+    .toggle-ui-btn {
+      width: 45px;
+      height: 45px;
+      bottom: 15px;
+      right: 15px;
+      font-size: 1.2rem;
+    }
+  }
 </style>
 
 </head>
@@ -533,8 +597,54 @@
     <button onclick="nextPage()" id="nextBtn"><span style="position: relative; z-index: 1;">Next →</span></button>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Toggle UI Button -->
+  <button class="toggle-ui-btn" id="toggleUiBtn" title="Hide/Show header">
+    <svg id="toggleIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+    // Configure PDF.js worker before loading reader.js
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+    }
+  </script>
   <script src="{% static 'js/reader.js' %}"></script>
+
+  <script>
+    // Toggle header visibility only
+    const toggleBtn = document.getElementById('toggleUiBtn');
+    const header = document.querySelector('.reader-header');
+    let uiVisible = true;
+
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    toggleBtn.addEventListener('click', function() {
+      uiVisible = !uiVisible;
+      
+      if (uiVisible) {
+        header.classList.remove('hidden');
+        toggleBtn.title = 'Hide header';
+        // Show eye icon
+        toggleIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+      } else {
+        header.classList.add('hidden');
+        toggleBtn.title = 'Show header';
+        // Show eye-off icon with slash
+        toggleIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+      }
+    });
+
+    // Also allow escape key to toggle
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        toggleBtn.click();
+      }
+    });
+  </script>
 
 </body>
 </html>

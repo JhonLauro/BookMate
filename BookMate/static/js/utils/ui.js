@@ -147,8 +147,13 @@ export function addBookToUserList(payload) {
   const userBooksGrid = document.getElementById("user-books");
   if (!userBooksGrid) return;
 
-    // REMOVE EMPTY STATE MESSAGE IF IT EXISTS
-  const emptyMessage = userBooksGrid.querySelector("p");
+  // REMOVE EMPTY STATE MESSAGE IF IT EXISTS
+  // Look for a direct child paragraph that contains the "No books" text
+  const directChildren = Array.from(userBooksGrid.children);
+  const emptyMessage = directChildren.find(child => 
+    child.tagName === "P" && 
+    child.textContent.trim().includes("No books added yet")
+  );
   if (emptyMessage) {
     emptyMessage.remove();
   }
@@ -215,14 +220,13 @@ newCard.innerHTML = `
   userBooksGrid.appendChild(newCard);
 
   // ✅ Initialize progress bar for newly added card
-const newBar = newCard.querySelector("[data-progress-bar]");
-if (newBar) {
-  const current = Number(newBar.dataset.current) || 0;
-  const total = Number(newBar.dataset.total) || 0;
-  const percent = total > 0 ? Math.round((current / total) * 100) : 0;
-  newBar.style.width = `${percent}%`;
-}
-
+  const newBar = newCard.querySelector("[data-progress-bar]");
+  if (newBar) {
+    const current = Number(newBar.dataset.current) || 0;
+    const total = Number(newBar.dataset.total) || 0;
+    const percent = total > 0 ? Math.round((current / total) * 100) : 0;
+    newBar.style.width = `${percent}%`;
+  }
 
   // NO local edit click handler here — rely on delegated handler in dashboard.js
 }
