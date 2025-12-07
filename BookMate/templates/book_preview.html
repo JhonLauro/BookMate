@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" sizes="32x32">
+  <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}" sizes="180x180">
   <link rel="stylesheet" href="{% static 'css/book_preview.css' %}?v=3">
   <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
   <link rel="stylesheet" href="{% static 'css/confirm-dialog.css' %}">
@@ -94,7 +96,6 @@
       </button>
       <div class="dropdown-menu" id="dropdownMenu">
         <a href="{% url 'dashboard' %}{% if request.GET.search %}?search={{ request.GET.search }}{% endif %}">📚 Dashboard</a>
-        <a href="#">👥 Community</a>
         <a href="{% url 'profile' %}">👤 Profile</a>
         <a href="{% url 'logout' %}" class="logout-link">🚪 Logout</a>
       </div>
