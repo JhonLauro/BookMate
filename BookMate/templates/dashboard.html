@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — BookMate</title>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" sizes="32x32">
+  <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}" sizes="180x180">
   <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=11">
   <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
   <link rel="stylesheet" href="{% static 'css/confirm-dialog.css' %}">
@@ -96,7 +98,6 @@
         <span class="bar"></span>
       </button>
       <div class="dropdown-menu" id="dropdownMenu">
-        <a href="#">Community</a>
         <a href="{% url 'profile' %}">👤 Profile</a>
         <a href="{% url 'logout' %}" class="logout-link">🚪 Logout</a>
       </div>
@@ -114,10 +115,53 @@
     <div class="book-grid" id="results-grid"></div>
   </section>
 
+  <!-- Recommendations -->
+  <section class="recommendations">
+    <h3>📚 Recommended For You</h3>
+    {% if recommended_books %}
+      <p class="recommendation-subtitle">
+        Based on your 
+        {% if user_favorite_genres %}
+          favorite genres: 
+          {% for genre in user_favorite_genres|slice:":3" %}
+            <span class="genre-badge">{{ genre }}</span>
+          {% endfor %}
+        {% endif %}
+        {% if user_tags %}
+          {% if user_favorite_genres %}and {% endif %}
+          tags: 
+          {% for tag in user_tags|slice:":3" %}
+            <span class="tag-badge">{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+      </p>
+      <div class="book-grid">
+        {% for book in recommended_books %}
+        <div class="book-card search-book-card" data-olid="{{ book.olid }}">
+          {% if book.cover_url %}
+            <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" class="book-cover">
+          {% else %}
+            <div class="no-cover">📘</div>
+          {% endif %}
+          <p class="book-title">{{ book.title }}</p>
+          <p class="book-author">{{ book.author }}</p>
+          <p class="book-year">Published: {{ book.year }}</p>
+          <button class="add-btn" data-olid="{{ book.olid }}" data-title="{{ book.title }}" data-author="{{ book.author }}" data-cover="{{ book.cover_url }}">➕ Add to Library</button>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-recommendations">
+        No recommendations yet! Select your favorite genres to get personalized book suggestions.
+        <br><small><a href="{% url 'genre_setup' %}">Update your favorite genres</a></small>
+      </p>
+    {% endif %}
+  </section>
+
   <!-- User's Book List -->
   <section class="currently-reading">
     <div class="section-header">
-      <h3>Currently Reading</h3>
+      <h3>📖 Currently Reading</h3>
       <div class="controls-group">
         <div class="filter-buttons">
           <button class="filter-btn active" data-filter="all">All Books</button>
@@ -195,49 +239,6 @@
         <p>No books added yet. Try searching above!</p>
       {% endfor %}
     </div>
-  </section>
-
-  <!-- Recommendations -->
-  <section class="recommendations">
-    <h3>📚 Recommended For You</h3>
-    {% if recommended_books %}
-      <p class="recommendation-subtitle">
-        Based on your 
-        {% if user_favorite_genres %}
-          favorite genres: 
-          {% for genre in user_favorite_genres|slice:":3" %}
-            <span class="genre-badge">{{ genre }}</span>
-          {% endfor %}
-        {% endif %}
-        {% if user_tags %}
-          {% if user_favorite_genres %}and {% endif %}
-          tags: 
-          {% for tag in user_tags|slice:":3" %}
-            <span class="tag-badge">{{ tag }}</span>
-          {% endfor %}
-        {% endif %}
-      </p>
-      <div class="book-grid">
-        {% for book in recommended_books %}
-        <div class="book-card search-book-card" data-olid="{{ book.olid }}">
-          {% if book.cover_url %}
-            <img src="{{ book.cover_url }}" alt="{{ book.title }} cover" class="book-cover">
-          {% else %}
-            <div class="no-cover">📘</div>
-          {% endif %}
-          <p class="book-title">{{ book.title }}</p>
-          <p class="book-author">{{ book.author }}</p>
-          <p class="book-year">Published: {{ book.year }}</p>
-          <button class="add-btn" data-olid="{{ book.olid }}" data-title="{{ book.title }}" data-author="{{ book.author }}" data-cover="{{ book.cover_url }}">➕ Add to Library</button>
-        </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p class="no-recommendations">
-        No recommendations yet! Select your favorite genres to get personalized book suggestions.
-        <br><small><a href="{% url 'genre_setup' %}">Update your favorite genres</a></small>
-      </p>
-    {% endif %}
   </section>
 
 <!-- Edit Book Progress Modal -->
