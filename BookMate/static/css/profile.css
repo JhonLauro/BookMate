@@ -74,6 +74,8 @@ body {
   align-items: center;
   gap: 1rem;
   animation: fadeIn 0.8s ease-out;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -97,7 +99,11 @@ body {
   mix-blend-mode: multiply;
 }
 
-.nav-logo img:hover {
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-logo:hover img {
   transform: rotate(5deg) scale(1.1);
 }
 

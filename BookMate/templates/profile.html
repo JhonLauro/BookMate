@@ -14,10 +14,12 @@
 <body>
   <header class="navbar">
     <div class="nav-left">
-      <div class="nav-logo">
-        <img src="{% static 'images/logo.png' %}" alt="BookMate Logo">
-        <span class="brand">BookMate</span>
-      </div>
+      <a href="{% url 'dashboard' %}" style="text-decoration: none;">
+        <div class="nav-logo">
+          <img src="{% static 'images/logo.png' %}" alt="BookMate Logo">
+          <span class="brand">BookMate</span>
+        </div>
+      </a>
     </div>
     
     <!-- Center navigation links -->
@@ -37,7 +39,6 @@
       </button>
       <div class="dropdown-menu" id="dropdownMenu">
         <a href="{% url 'dashboard' %}">📚 Dashboard</a>
-        <a href="{% url 'edit_profile' %}">✏️ Edit Profile</a>
         <a href="{% url 'logout' %}" class="logout-link">🚪 Logout</a>
       </div>
     </div>

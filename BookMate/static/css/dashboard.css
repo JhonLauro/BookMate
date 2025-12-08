@@ -478,15 +478,7 @@ h3 {
   font-family: 'Georgia', 'Times New Roman', serif;
 }
 
-h3::before {
-  content: '📖';
-  position: absolute;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
-}
+
 
 /* Books grid */
 .book-grid {

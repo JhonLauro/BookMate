@@ -15,10 +15,12 @@
 <body>
   <!-- Navbar -->
   <header class="navbar">
-    <div class="logo">
-      <img src="{% static 'images/logo.png' %}" alt="BookMate Logo" class="logo-image">
-      <span class="logo-text">BookMate</span>
-    </div>
+    <a href="{% url 'dashboard' %}" style="text-decoration: none;">
+      <div class="logo">
+        <img src="{% static 'images/logo.png' %}" alt="BookMate Logo" class="logo-image">
+        <span class="logo-text">BookMate</span>
+      </div>
+    </a>
 
     <div class="nav-center-decor">
       <div class="vine-left">
