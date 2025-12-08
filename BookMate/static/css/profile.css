@@ -325,7 +325,11 @@ body {
   position: relative;
 }
 
-.navbar a::after {
+.logo-link::after {
+  display: none !important;
+}
+
+.navbar a:not(.logo-link)::after {
   content: '';
   position: absolute;
   width: 0;
@@ -337,7 +341,7 @@ body {
   transform: translateX(-50%);
 }
 
-.navbar a:hover::after {
+.navbar a:not(.logo-link):hover::after {
   width: 100%;
 }
 
